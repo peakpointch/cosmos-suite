@@ -1,0 +1,16 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Calculator from "./calculator";
+import "../styles/globals.css";
+
+// Import any component inside your repo:
+
+function App() {
+  return <div className="p-4 md:p-8">Add Components Here</div>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

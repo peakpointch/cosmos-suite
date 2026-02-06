@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "LIBRARY_NAME",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "bundleConfig": "./webpack.webflow.cjs",
+    "description": "Developed by Peakpoint"
+  }
+}
