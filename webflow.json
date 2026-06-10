@@ -6,5 +6,12 @@
     ],
     "bundleConfig": "./webpack.webflow.cjs",
     "description": "Developed by Peakpoint"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1781117841931,
+      "version": "1.23.0"
+    }
   }
 }
