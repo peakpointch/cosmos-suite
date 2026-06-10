@@ -14,21 +14,41 @@ const animateSelector = Selector.attr<AnimateElement>("data-animate");
 
 export function animateHeading(element: HTMLElement): void {
   if (element.classList.contains("is-split")) return;
-  element.classList.add("is-split");
 
-  const heading = new SplitText(element, {
-    type: "words",
-    wordsClass: "gsap-word",
-  });
-  gsap.from(heading.words, {
-    y: 50,
+  gsap.set(element, {
     opacity: 0,
-    duration: 0.6,
-    ease: "power3.out",
-    stagger: 0.15,
-    scrollTrigger: {
-      trigger: element,
-      start: "top 80%", // Trigger when heading is 80% down the viewport
+  });
+
+  ScrollTrigger.create({
+    trigger: element,
+    start: "top 85%",
+    once: true,
+    onEnter: () => {
+      element.classList.add("is-split");
+
+      const heading = new SplitText(element, {
+        type: "words",
+        wordsClass: "gsap-word",
+      });
+
+      gsap.set(element, {
+        opacity: 1,
+      });
+
+      gsap.fromTo(
+        heading.words,
+        {
+          y: 50,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.15,
+        }
+      );
     },
   });
 }
