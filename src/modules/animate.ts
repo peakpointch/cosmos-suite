@@ -12,45 +12,58 @@ type AnimateElement =
   | "light-nav";
 const animateSelector = Selector.attr<AnimateElement>("data-animate");
 
-export function animateHeading(element: HTMLElement): void {
+export function createObserver(
+  callback: (
+    entry: IntersectionObserverEntry,
+    observer: IntersectionObserver
+  ) => any,
+  options?: IntersectionObserverInit
+): IntersectionObserver {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        callback(entry, observer);
+      }
+    });
+  }, options);
+  return observer;
+}
+
+export function headingAnimation(
+  entry: IntersectionObserverEntry,
+  observer: IntersectionObserver
+): void {
+  const element = entry.target as HTMLElement;
+
   if (element.classList.contains("is-split")) return;
 
+  element.classList.add("is-split");
+
+  const heading = new SplitText(element, {
+    type: "words",
+    wordsClass: "gsap-word",
+  });
+
   gsap.set(element, {
-    opacity: 0,
+    opacity: 1,
   });
 
-  ScrollTrigger.create({
-    trigger: element,
-    start: "top 85%",
-    once: true,
-    onEnter: () => {
-      element.classList.add("is-split");
-
-      const heading = new SplitText(element, {
-        type: "words",
-        wordsClass: "gsap-word",
-      });
-
-      gsap.set(element, {
-        opacity: 1,
-      });
-
-      gsap.fromTo(
-        heading.words,
-        {
-          y: 50,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          stagger: 0.15,
-        }
-      );
+  gsap.fromTo(
+    heading.words,
+    {
+      y: 50,
+      opacity: 0,
     },
-  });
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.15,
+    }
+  );
+
+  observer.unobserve(element);
 }
 
 export function animateHeadings(): void {
@@ -60,5 +73,15 @@ export function animateHeadings(): void {
     "h1, h2, h3, h4, h5, h6"
   );
 
-  headings.forEach((element) => animateHeading(element));
+  const observer = createObserver(headingAnimation, {
+    rootMargin: "0px 0px -15% 0px",
+  });
+
+  headings.forEach((element) => {
+    gsap.set(element, {
+      opacity: 0,
+    });
+
+    observer.observe(element);
+  });
 }
