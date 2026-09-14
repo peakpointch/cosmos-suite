@@ -1,11 +1,14 @@
 {
   "library": {
-    "name": "LIBRARY_NAME",
+    "name": "Cosmos Suite",
     "components": [
       "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
-    "bundleConfig": "./webpack.webflow.cjs",
-    "description": "Developed by Peakpoint"
+    "bundleConfig": "C:/Users/lmgraf/code/peakpoint/clients/cosmos-suite/webpack.webflow.cjs",
+    "description": "Developed by Peakpoint",
+    "functions": [
+      "**/*.webflow.function.@(js|cjs|mjs|ts)"
+    ]
   },
   "telemetry": {
     "global": {
@@ -13,5 +16,6 @@
       "lastPrompted": 1781117841931,
       "version": "1.23.0"
     }
-  }
+  },
+  "siteId": "697cc32613f92354865e901c"
 }
